@@ -41,6 +41,12 @@ const Home = () => {
         }),
       });
 
+      if (response.status === 502) {
+        alert('Server is offline. Please try again later.');
+        setProcessing(false);
+        return;
+      }
+
       if (!response.body) {
         alert('No response body');
         setProcessing(false);
