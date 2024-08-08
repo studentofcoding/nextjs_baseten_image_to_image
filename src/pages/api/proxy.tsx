@@ -35,6 +35,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       const imageUrl1 = await uploadToCloudinary(image_input_1);
       const imageUrl2 = await uploadToCloudinary(image_input_2);
+      // Make random numer for seed
+      const seed = Math.floor(Math.random() * 1000000000);
       console.log('Uploaded image URLs:', imageUrl1, imageUrl2);
 
       const response = await fetch('https://model-8w6x27yw.api.baseten.co/development/predict', {
@@ -45,10 +47,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
         body: JSON.stringify({
           workflow_values: {
+            seed: seed,
             image_input_1: imageUrl1,
             image_input_2: imageUrl2,
             positive_prompt,
-            negative_prompt: 'text, watermark',
+            negative_prompt: 'text, watermark, ugly, moles, deformed, 3d, cartoon, worst quality, normal quality, low quality, low res, blurry, text, watermark, logo, banner, extra digits, cropped, jpeg artifacts, signature, username, error, sketch, duplicate, ugly, monochrome, horror, geometry, mutation, disgusting, disfigured',
           },
         }),
       });
